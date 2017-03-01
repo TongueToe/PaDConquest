@@ -18,9 +18,11 @@ public class Monster{
 		this.rarity = rarity;
 		this.elem = elem;
 		this.type = type;
-		this.stats = stats;
+		this.stats = stats.clone();
 		this.ls = ls;
 		level = 1;
+
+		baseStats = stats.clone();
 	}
 
 	/**
@@ -51,8 +53,13 @@ public class Monster{
 	 * Calculates stat growth by accounting rarity and type.
 	 */
 	public void levelUp(){
-		double baseStatGrowth = 0.8;
-		double rareStat = rarity * 0.2;
+		if(level >= 99)
+			return;
+
+		level++;	
+
+		double baseStatGrowth = 0.95;
+		double rareStat = rarity * 0.05;
 		double statGrowth = baseStatGrowth + rareStat;
 		
 		double[] typeMultiplier = new double[] {1.0, 1.0, 1.0};
@@ -92,11 +99,13 @@ public class Monster{
 					typeMultiplier[0] += 0.30;
 					typeMultiplier[1] += -0.15;
 					typeMultiplier[2] += -0.15;
+					break;	
 			}
 		}
 
 		for(int i = 0; i < stats.length; i++){
 			stats[i] += baseStats[i] * typeMultiplier[i] * 0.1 * statGrowth;
+		
 		}
 	}
 
@@ -104,23 +113,38 @@ public class Monster{
 		return ls;
 	}
 
+	public double[] getBaseStats(){
+		return baseStats;
+	}
+
+	public double[] getStats(){
+		return stats;
+	}
+
+	public int getLevel(){
+		return level;
+	}
+
 	public int getHp(){
-		return (int)stats[0];
+		return (int)Math.round(stats[0]);
 	}
 
 	public int getAtk(){
-		return (int)stats[1];
+		return (int)Math.round(stats[1]);
 	}
 
 	public int getRcv(){
-		return (int)stats[2];
+		return (int)Math.round(stats[2]);
 	}
 
 	public double getWeightedStats(){
-		return stats[0]/10 + stats[1]/5 + stats[2]/3;
+		return getHp()/10 + getAtk()/5 + getRcv()/3;
 	}
 
 	public String toString(){
-		return name;
+		String ret = "Name: " + name + "\tID: " + id + "\nLevel: " + level + 
+			"\n\nHP: " + getHp() + "\nATK: " + getAtk() + "\nRCV: " + getRcv() +
+			"\n\nLeader Skill: " + ls[0] + "x to HP, " + ls[1] + "x to ATK, " + ls[2] + "x to RCV\n";
+		return ret;
 	}
 }

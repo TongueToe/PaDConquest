@@ -9,15 +9,17 @@ public class Driver{
 		int rarity = 5;
 		Element[] elem = new Element[] {Element.LIGHT, Element.WATER};
 		Type[] type = new Type[] {Type.GOD, Type.HEALER};
-		double[] stats = new double[] {100, 100, 100};
+		double[] stats = new double[] {100, 50, 30};
 		double[] ls = new double[] {1.0, 4.0, 1.0};
 
 		Monster dqxq = new Monster(id, name, rarity, elem, type, stats, ls);
 
 		Team team = new Team( new Monster[] {dqxq, dqxq, dqxq, dqxq, dqxq});
 
-		System.out.println(Arrays.toString(team.getAtk()));	
-
+		System.out.println(dqxq);
+		for(int i = 0; i < 98; i++)
+			dqxq.levelUp();
+		System.out.println(dqxq);
 	}
 
 }
