@@ -2,4 +2,4 @@
 
 ## Notes
 + Don't know how I'm going to implement this
-+ shit I miss C#
++ Why DIDN'T I do this in C#
